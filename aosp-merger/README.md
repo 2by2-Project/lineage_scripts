@@ -2,7 +2,7 @@
 
 ### Variables
 
-`${TOP}/vendor/lineage/vars/` - This directory stores all variables for repositories that have upstreams that are regularly merged.
+`${TOP}/vendor/aosp/vars/` - This directory stores all variables for repositories that have upstreams that are regularly merged.
 
 Standard Variables:
 
@@ -50,7 +50,7 @@ To merge a new AOSP tag platform-wide:
 
 7. Execute `repo sync` on the working tree
 
-8.  Edit `${TOP}/vendor/lineage/vars/common` moving the currently tracked tag from `common_aosp_tag` to `prev_common_aosp_tag`, then updating `common_aosp_tag` to reflect the newly tracked tag, and then do the same for `prev_common_aosp_build_id` and `common_aosp_build_id` - lastly, update the `topic` variable to reflect the current month
+8.  Edit `${TOP}/vendor/aosp/vars/common` moving the currently tracked tag from `common_aosp_tag` to `prev_common_aosp_tag`, then updating `common_aosp_tag` to reflect the newly tracked tag, and then do the same for `prev_common_aosp_build_id` and `common_aosp_build_id` - lastly, update the `topic` variable to reflect the current month
 
 9. Run `aosp-merger/aosp-merger.sh`, this will take some time, and reads all the variables you set up above while merging the new tags to all relevant tracked repos. This will likely create conflicts on some forked repository, and will ask you to resolve them. It will then issue a final check to ask you if you'd like to upload the merge to gerrit, then after approval uploads the merge to Gerrit for review.
 
@@ -66,13 +66,13 @@ To merge a new AOSP tag to all currently Google supported Pixel devices and thei
 
    e.g. `pixel/update-any-var.sh build_id TQ2A.230305.008.C1 sunfish bramble redfin barbet cheetah`
 
-3. Git commit the `vendor/lineage/vars` variable updates and upload to Gerrit
+3. Git commit the `vendor/aosp/vars` variable updates and upload to Gerrit
 
 4. Run `aosp-merger/aosp-merger.sh devices` to merge newly entered AOSP tags to all supported device's device-tree and dependencies, and upload the merges to Gerrit
 
 5. Run `aosp-merger/aosp-merger.sh kernels` to merge newly entered AOSP kernel tags to all supported device's kernel-tree and dependencies, and upload the merges to Gerrit
 
-6. Download pixel factory images, extract files and firmware - e.g. `source ${TOP}/vendor/lineage/vars/devices && for device in devices; do pixel/device.sh $device done`
+6. Download pixel factory images, extract files and firmware - e.g. `source ${TOP}/vendor/aosp/vars/devices && for device in devices; do pixel/device.sh $device done`
 
 7. `cd` to each relevant device's `vendor/$oem/$deviceName` repository, as well as `vendor/firmware` and `git add`/`git commit` the updated files
 
@@ -92,7 +92,7 @@ To merge a new CAF/CLO tag to all forked repositories:
 
 1. Fetch the latest tags for supported SoCs and current version of QSSI from https://wiki.codelinaro.org/en/clo/la/release
 
-2. Edit `vendor/lineage/vars/qcom`, `git commit` and upload the change to Gerrit
+2. Edit `vendor/aosp/vars/qcom`, `git commit` and upload the change to Gerrit
 
 3. Run the merger script on whatever platforms you have updated the tags to create merges and upload them to Gerrit - e.g. To merge on all support platforms you'd run `for platform in qssi msm8953 sdm660 sdm845 msmnile kona lahaina waipio-vendor waipio-video; do aosp-merger/aosp-merger.sh clo $platform done`
 
